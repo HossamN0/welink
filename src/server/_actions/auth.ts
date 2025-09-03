@@ -1,5 +1,6 @@
 'use server'
 
+import { Environment } from "@/constants/enums"
 import { loginSchema } from "@/validation/auth"
 import z from "zod"
 
@@ -17,16 +18,26 @@ export const login = async (credintials: { username: string, password: string })
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
             method: 'POST',
-            body: JSON.stringify(credintials)
-        })
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: credintials.username,
+                password: credintials.password
+            })
+        });
+        const data = await res.json();
         if (!res.ok) {
             return {
                 status: res.status,
-                message: res.statusText
+                message: data?.message || res?.statusText
             }
         }
-        console.log('main req', res)
+        return {
+            status: 200,
+            ...data
+        }
     } catch (error) {
-
+        console.log(error)
     }
 }

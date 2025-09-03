@@ -3,10 +3,11 @@
 import FormFields from "@/components/form-fields"
 import { Button } from "@/components/ui/button"
 import Loader from "@/components/ui/loader"
-import { Forms } from "@/constants/enums"
+import { Forms, Routes } from "@/constants/enums"
 import useFormFields from "@/hooks/useFormFields"
 import { ValidationErrors } from "@/validation/auth"
 import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { useRef, useState } from "react"
 import toast from "react-hot-toast"
 
@@ -15,6 +16,7 @@ function Form() {
     const [fieldErrors, setFieldErrors] = useState<ValidationErrors | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const { getFormFields } = useFormFields({ form: Forms.LOGIN });
+    const router = useRouter()
     const formRef = useRef<HTMLFormElement>(null);
     const onsubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,6 +35,9 @@ function Form() {
                 if (error?.responseError) {
                     toast.error(error?.responseError)
                 }
+            }
+            if (res?.ok) {
+                router.replace(`/${Routes.HOME}`)
             }
         } catch (error) {
             console.log(error)

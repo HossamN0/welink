@@ -1,20 +1,55 @@
 import { Environment, Pages, Routes } from "@/constants/enums";
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, User as NextAuthUser } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { login } from "./_actions/auth";
 
+declare module "next-auth" {
+    interface User {
+        id: string;
+        username: string;
+        role: string;
+        token: string;
+    }
+    interface Session {
+        user: User;
+    }
+}
+
 export const authOptions: NextAuthOptions = {
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user?.id;
+                token.username = user?.username;
+                token.role = user?.role;
+                token.token = user?.token;
+            }
+            return token;
+        },
+        async session({ token, session }) {
+            session.user.id = token.id as string;
+            session.user.username = token.username as string;
+            session.user.role = token.role as string;
+            session.user.token = token.token as string;
+            return session
+        }
+    },
     providers: [
         Credentials({
-            name: 'credintials',
+            name: 'credentials',
             credentials: {
                 username: { label: 'username', type: 'text' },
                 password: { label: 'password', type: 'password' }
             },
-            authorize: async (credintials: { username: string, password: string }) => {
-                const res = await login(credintials);
+            authorize: async (credentials) => {
+                const res = await login(credentials!);
                 if (res?.status === 200) {
-                    return res
+                    return {
+                        id: res?.user?.id,
+                        username: res?.user?.username,
+                        role: res?.user?.role,
+                        token: res?.token
+                    }
                 } else {
                     throw new Error(
                         JSON.stringify({

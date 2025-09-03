@@ -1,5 +1,7 @@
 export enum Routes {
+    HOME = '',
     AUTH = "auth",
+    ADMIN = "admin"
 }
 
 export enum Pages {
@@ -18,4 +20,9 @@ export enum InputTypes {
 export enum Environment {
     PRODUCTION = "production",
     DEVELOPMENT = "development",
+}
+
+export enum Roles {
+    ADMIN = "admin",
+    USER = "user"
 }

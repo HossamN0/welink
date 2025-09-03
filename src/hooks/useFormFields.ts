@@ -8,14 +8,14 @@ const useFormFields = ({ form }: { form: string }) => {
             label: 'Username',
             name: 'username',
             type: 'text',
-            placeholder: "Please enter your username",
+            placeholder: "Your username",
             autoFocus: true
         },
         {
             label: 'Password',
             name: 'password',
             type: 'password',
-            placeholder: "Please enter your password",
+            placeholder: "Your password",
         }
     ]
 
