@@ -1,0 +1,25 @@
+@layer base {
+    .container {
+        @apply px-2 md:px-8 lg:px-12 mx-auto;
+    }
+
+    .min-container {
+        @apply min-w-80 mx-auto;
+    }
+
+    .content-container {
+        @apply max-w-[1120px] min-w-72 w-[calc(100%-40px)] mx-auto;
+    }
+
+    @media (max-width: 320px) {
+        .min-container {
+            @apply w-80;
+        }
+    }
+
+    @media (max-width: 288px) {
+        .content-container {
+            @apply w-72;
+        }
+    }
+}
