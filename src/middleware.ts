@@ -8,17 +8,21 @@ export default withAuth(
         const pathname = req.nextUrl.pathname;
         const isAuth = await getToken({ req });
         const isAuthPages = pathname.startsWith(`/${Routes.AUTH}`);
-        const protectedRoutes = [Routes.ADMIN];
-        const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(`/${route}`));
+        const AdminRoutes = [Routes.ADMIN];
+        const isAdminRoute = AdminRoutes.some((route) => pathname.startsWith(`/${route}`));
+        const EmployeeRoutes = [Routes.CHECKPOINT];
+        const isEmployeeRoute = EmployeeRoutes.some((route) => pathname.startsWith(`/${route}`));
+        const GuestRoutes = [Routes.GATE];
+        const isGuestRoute = GuestRoutes.some((route) => pathname.startsWith(`/${route}`));
         const role = isAuth?.role;
 
-        if (isAuth && isAuthPages) {
+        if (isAuth && (isAuthPages || isGuestRoute)) {
             return NextResponse.redirect(
                 new URL(`/${Routes.HOME}`, req.url)
             )
         }
 
-        if (role !== Roles.ADMIN && isProtectedRoute) {
+        if (role !== Roles.ADMIN && isAdminRoute) {
             if (isAuth) {
                 return NextResponse.redirect(
                     new URL(`/${Routes.HOME}`, req.url)
@@ -29,6 +33,19 @@ export default withAuth(
                 )
             }
         }
+
+        if (role !== Roles.EMPLOYEE && isEmployeeRoute) {
+            if (isAuth) {
+                return NextResponse.redirect(
+                    new URL(`/${Routes.HOME}`, req.url)
+                )
+            } else {
+                return NextResponse.redirect(
+                    new URL(`/${Routes.AUTH}/${Pages.LOGIN}`, req.url)
+                )
+            }
+        }
+
     },
     {
         callbacks: {

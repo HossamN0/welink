@@ -42,8 +42,8 @@ function HeroSection({ session }: { session: any }) {
                 />
             </div>
             <div>
-                <h1 className="font-bold text-5xl text-center leading-15">Welcome <br /> to parking services</h1>
-                <div className="flex-center gap-3.5 mt-9 *:rounded-4xl *:text-[16px] *:min-w-36 *:py-5">
+                <h1 className="font-bold md:text-5xl text-2xl text-center md:leading-15 leading-9">Welcome <br /> to parking services</h1>
+                <div className="flex-center md:flex-row flex-col gap-3.5 mt-9 *:rounded-4xl *:text-[16px] *:min-w-36 *:py-5">
                     <Button disabled={loading} onClick={handleAuthClick} variant={'white'} className="">
                         {loading ? <Loader color={'border-black'} /> : user ? 'Logout' : 'Login'}
                     </Button>

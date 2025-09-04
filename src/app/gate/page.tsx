@@ -8,7 +8,7 @@ import { Gate } from "@/types/api"
 
 function GatePage() {
 
-    const { data } = useFetchData('gates', () => GetGates({}))
+    const { data } = useFetchData('gates', GetGates)
 
     return (
         <main className="pb-20 pt-15 relative flex-center z-[1]">
