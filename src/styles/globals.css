@@ -134,6 +134,10 @@
   main {
     @apply bg-black min-h-screen;
   }
+
+  .not-found {
+    @apply text-center text-3xl text-white/50;
+  }
 }
 
 @import './layout.css';

@@ -23,7 +23,7 @@ function GatePage() {
                     </ul>
                 </div>
                 :
-                <div className="text-center text-3xl text-white/50">
+                <div className="not-found">
                     No Gates Found
                 </div>
             }

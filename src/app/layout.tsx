@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import ReactQueryProvider from "@/providers/react-query";
 import ReduxProvider from "@/providers/redux";
+import { WebsocketConnection } from "@/services/ws/connection";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -29,6 +30,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <ReduxProvider>
+            <WebsocketConnection />
             <Toaster />
             {children}
           </ReduxProvider>

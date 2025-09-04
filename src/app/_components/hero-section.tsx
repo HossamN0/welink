@@ -5,11 +5,12 @@ import Link from "@/components/link"
 import { Button, buttonVariants } from "@/components/ui/button"
 import Loader from "@/components/ui/loader"
 import { Pages, Roles, Routes } from "@/constants/enums"
+import { User } from "next-auth"
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-function HeroSection({ session }: { session: any }) {
+function HeroSection({ session }: { session: { user: User } }) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const user = session?.user

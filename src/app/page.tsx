@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <main>
-      <HeroSection session={session} />
+      <HeroSection session={session!} />
     </main>
 
   );
