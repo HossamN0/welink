@@ -1,6 +1,5 @@
 'use server'
 
-import { Environment } from "@/constants/enums"
 import { loginSchema } from "@/validation/auth"
 import z from "zod"
 

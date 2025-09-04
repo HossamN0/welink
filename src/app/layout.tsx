@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
+import ReactQueryProvider from "@/providers/react-query";
+import ReduxProvider from "@/providers/redux";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -25,8 +27,12 @@ export default function RootLayout({
       <body
         className={`${roboto.className} min-container`}
       >
-        <Toaster />
-        {children}
+        <ReactQueryProvider>
+          <ReduxProvider>
+            <Toaster />
+            {children}
+          </ReduxProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 import { Environment, Pages, Routes } from "@/constants/enums";
-import { NextAuthOptions, User as NextAuthUser } from "next-auth";
+import { login } from "@/server/_actions/auth";
+import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { login } from "./_actions/auth";
 
 declare module "next-auth" {
     interface User {

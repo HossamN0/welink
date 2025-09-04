@@ -1,7 +1,9 @@
 export enum Routes {
     HOME = '',
     AUTH = "auth",
-    ADMIN = "admin"
+    ADMIN = "admin",
+    GATE = "gate",
+    CHECKPOINT = 'checkpoint'
 }
 
 export enum Pages {
@@ -24,5 +26,5 @@ export enum Environment {
 
 export enum Roles {
     ADMIN = "admin",
-    USER = "user"
+    EMPLOYEE = "employee",
 }

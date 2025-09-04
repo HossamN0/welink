@@ -1,15 +1,11 @@
 import Link from "@/components/link"
+import Gradiant from "@/components/ui/bg-gradiant"
 import { Routes } from "@/constants/enums"
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
     return (
-        <main className="min-h-screen w-full relative bg-black z-[1] py-[100px]">
-            <div
-                className="absolute inset-0 -z-[1]"
-                style={{
-                    background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(6, 182, 212, 0.25), transparent 70%), #000000",
-                }}
-            />
+        <main className="w-full relative z-[1] py-[100px]">
+            <Gradiant />
             {children}
             <div className="w-11/12 mx-auto">
                 <div className="h-0.5 bg-white/10 mt-14 mb-4 "></div>
