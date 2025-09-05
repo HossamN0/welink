@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <ReduxProvider>
-            <WebsocketConnection />
+            {/* <WebsocketConnection /> */}
             <Toaster />
             {children}
           </ReduxProvider>

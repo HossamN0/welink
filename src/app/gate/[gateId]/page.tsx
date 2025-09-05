@@ -38,7 +38,7 @@ function PageGateId() {
 
     useEffect(() => {
         // should handle it by error status 400 but request status always 200
-        if (data?.data?.length == 0) {
+        if (data?.length == 0) {
             notFound()
         }
     }, [data])
@@ -53,9 +53,9 @@ function PageGateId() {
                     {isLoading ?
                         <Loader />
                         :
-                        data?.data?.length > 0 ?
+                        Array.isArray(data) && data.length > 0 ?
                             <ul className="grid lg:grid-cols-2 gap-4 mt-11">
-                                {data?.data?.map((zone: Zone) =>
+                                {data?.map((zone: Zone) =>
                                     <ZoneCard
                                         verifyId={verifyId}
                                         setVerifyId={setVerifyId}

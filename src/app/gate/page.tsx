@@ -9,7 +9,7 @@ import { Gate } from "@/types/api"
 
 function GatePage() {
 
-    const { data, isLoading } = useFetchData('gates', GetGates)
+    const { data, isLoading } = useFetchData<Gate[]>('gates', GetGates)
 
     return (
         <main className="pb-20 pt-15 relative flex-center z-[1]">
@@ -17,11 +17,11 @@ function GatePage() {
             {isLoading ?
                 <Loader />
                 :
-                data?.data?.length > 0 ?
+                data && data.length > 0 ?
                     <div className="content-container">
                         <h2 className="text-2xl font-bold mb-9">All Gates</h2>
                         <ul className="grid lg:grid-cols-3 md:grid-cols-2 justify-center gap-4 gap-y-15">
-                            {data?.data?.map((gate: Gate) => (
+                            {data.map((gate: Gate) => (
                                 <GateCard key={gate.id} gate={gate} />
                             ))}
                         </ul>

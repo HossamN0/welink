@@ -15,7 +15,8 @@ function ZoneCard({ verifyId, setVerifyId, loading, clickFunc, type, zone }: { v
 
     const queryClient = useQueryClient();
     const [id, setId] = useState('');
-    const { data, isLoading, isFetching, error, isError, refetch } = useFetchData<{ data: Subscription }>(`verify-${zone.id}`, () => getSubscriptions({ id }), { enabled: false, retry: false });
+    const [category, setCategory] = useState('');
+    const { data, isLoading, isFetching, error, isError, refetch } = useFetchData<Subscription>(`verify-${zone.id}`, () => getSubscriptions({ id }), { enabled: false, retry: false });
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         refetch();
@@ -25,13 +26,14 @@ function ZoneCard({ verifyId, setVerifyId, loading, clickFunc, type, zone }: { v
             toast.error((error as ApiError)?.response?.data?.message)
         }
         if (data) {
-            const subscriptionId = data?.data?.id;
+            const subscriptionId = data?.id;
             if (subscriptionId) {
-                toast.success(`All Zones With ${data?.data?.category} Subscription Are Open For You`, { duration: 5000 });
+                toast.success(`All Zones With ${data?.category} Subscription Are Open For You`, { duration: 5000 });
                 setVerifyId(subscriptionId);
+                setCategory(data?.category);
             }
         }
-        queryClient.resetQueries({ queryKey: [`verify-${id}`] });
+        queryClient.resetQueries({ queryKey: [`verify-${zone.id}`] });
     }, [isError, data, error, id, queryClient, setVerifyId]);
     return (
         <>
@@ -71,7 +73,7 @@ function ZoneCard({ verifyId, setVerifyId, loading, clickFunc, type, zone }: { v
                             </div>
                         </form>
                     }
-                    <Button disabled={loading || (type === Roles.SUBSCRIBER && (!verifyId || data?.data?.category !== zone.categoryId))} onClick={() => clickFunc({ zoneId: zone.id })} variant={'cyan'} className="w-full">
+                    <Button disabled={loading || (type === Roles.SUBSCRIBER && (!verifyId || category !== zone.categoryId))} onClick={() => clickFunc({ zoneId: zone.id })} variant={'cyan'} className="w-full">
                         {loading ? <Loader /> : 'Go'}
                     </Button>
                 </div>

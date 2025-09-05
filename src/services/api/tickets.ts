@@ -1,5 +1,6 @@
 import request from "@/lib/axios"
+import { CheckinRequest, CheckinResponse } from "@/types/api"
 
-export const checkin = ({ data }: { data: { gateId: string, zoneId: string, type: string, subscriptionId?: string } }) => {
-    return request({ method: `POST`, url: `/tickets/checkin`, data })
+export const checkin = ({ data }: { data: CheckinRequest }) => {
+    return request<CheckinResponse>({ method: 'POST', url: `/tickets/checkin`, data })
 }

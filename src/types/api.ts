@@ -23,12 +23,17 @@ export interface Zone {
     totalSlots: number
 }
 
-
 export interface ApiError {
-    response: { data: { message: string, status: string } }
+    response: { 
+        data: { 
+            message: string
+            status: string 
+            code?: string
+        } 
+    }
     status: number
+    message: string
 }
-
 
 export interface Ticket {
     id: string
@@ -60,4 +65,30 @@ export interface Car {
     brand: string;
     model: string;
     color: string;
+}
+
+export interface ApiResponse<T> {
+    data: T;
+    message?: string;
+    status: 'success' | 'error';
+}
+
+export interface PaginatedResponse<T> extends ApiResponse<T[]> {
+    pagination: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    };
+}
+
+export interface CheckinRequest {
+    gateId: string;
+    zoneId: string;
+    type: Roles.VISITOR | Roles.SUBSCRIBER;
+    subscriptionId?: string;
+}
+
+export interface SubscriptionVerificationRequest {
+    id: string;
 }

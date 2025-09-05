@@ -1,14 +1,15 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 const client = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
-export default function request({ ...options }) {
-    //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onSuccess = (res: any) => res;
-    //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onError = (err: any) => { throw err; };
+export default function request<T = unknown>(options: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+    const onSuccess = (response: AxiosResponse<T>): AxiosResponse<T> => {
+        return response;
+    };
+
+    const onError = (error: AxiosError): never => { throw error; };
 
     return client(options).then(onSuccess).catch(onError);
 }

@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 interface UseFetchDataReturn<T> {
     component: null;
@@ -13,11 +13,11 @@ interface UseFetchDataReturn<T> {
 
 const useFetchData = <T,>(
     key: string,
-    func: () => Promise<T>,
-    options?: Omit<UseQueryOptions<T, AxiosError>, 'queryKey' | 'queryFn'>
+    func: () => Promise<AxiosResponse<T>>,
+    options?: Omit<UseQueryOptions<AxiosResponse<T>, AxiosError>, 'queryKey' | 'queryFn'>
 ): UseFetchDataReturn<T> => {
 
-    const { data, error, isLoading, isFetching, refetch, isError } = useQuery<T, AxiosError, T>({
+    const { data, error, isLoading, isFetching, refetch, isError } = useQuery<AxiosResponse<T>, AxiosError, AxiosResponse<T>>({
         queryKey: [key],
         queryFn: func,
         refetchOnWindowFocus: false,
@@ -26,12 +26,11 @@ const useFetchData = <T,>(
         ...options
     });
 
-
     return {
         component: null,
         error: error || null,
         isLoading,
-        data,
+        data: data?.data,
         refetch,
         isError,
         isFetching
