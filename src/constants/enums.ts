@@ -30,3 +30,14 @@ export enum Roles {
     VISITOR = "visitor",
     SUBSCRIBER = "subscriber"
 }
+
+export enum RateMode {
+    NORMAL = "normal",
+    SPECIAL = "special"
+}
+
+export enum ApiStatus {
+    LOADING = "loading",
+    SUCCESS = "success",
+    ERROR = "error"
+}

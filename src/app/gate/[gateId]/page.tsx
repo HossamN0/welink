@@ -7,7 +7,7 @@ import { notFound, useParams } from "next/navigation"
 import GateToggle from "./_components/toggle"
 import { useEffect, useState } from "react"
 import Gradiant from "@/components/ui/bg-gradiant"
-import { Zone } from "@/types/api"
+import { Subscription, Zone } from "@/types/api"
 import ZoneCard from "@/components/cards/zone-card"
 import { Roles } from "@/constants/enums"
 import TicketModal from "./_components/ticket-modal"
@@ -15,12 +15,14 @@ import { useCheckin } from "@/hooks/mutations/useCheckin"
 import { useSelector } from "react-redux"
 import { PersistSlice } from "@/store/reducers/persist-slice"
 import Loader from "@/components/ui/loader"
+import { useQueryClient } from "@tanstack/react-query"
 
 function PageGateId() {
 
+    const queryClient = useQueryClient();
     const [role, setRole] = useState<Roles.SUBSCRIBER | Roles.VISITOR>(Roles.VISITOR);
     const [zoneId, setZoneId] = useState<string>('');
-    const [verifyId, setVerifyId] = useState('');
+    const [verifyData, setVerifyData] = useState<Subscription | undefined>(undefined);
     const { gateId }: { gateId: string } = useParams()
     const { data, isLoading } = useFetchData(`gate-${gateId}`, () => GetGateById(gateId))
     const checkinMutation = useCheckin()
@@ -31,7 +33,7 @@ function PageGateId() {
             gateId: gateId,
             zoneId: zoneId,
             type: role,
-            ...role === Roles.SUBSCRIBER ? { subscriptionId: verifyId } : {}
+            ...role === Roles.SUBSCRIBER ? { subscriptionId: verifyData?.id } : {}
         }
         checkinMutation.mutate({ data })
     }
@@ -42,6 +44,12 @@ function PageGateId() {
             notFound()
         }
     }, [data])
+
+    useEffect(() => {
+        if (checkinMutation.isSuccess) {
+            queryClient.resetQueries({ queryKey: [`gate-${gateId}`] });
+        }
+    }, [checkinMutation.isSuccess, gateId, queryClient])
     return (
         <main>
             <TicketModal open={checkinMutation.isSuccess} setOpen={checkinMutation.reset} data={checkinMutation.data} />
@@ -57,13 +65,14 @@ function PageGateId() {
                             <ul className="grid lg:grid-cols-2 gap-4 mt-11">
                                 {data?.map((zone: Zone) =>
                                     <ZoneCard
-                                        verifyId={verifyId}
-                                        setVerifyId={setVerifyId}
+                                        verifyData={verifyData}
+                                        setVerifyData={setVerifyData}
                                         loading={(checkinMutation.isPending && zoneId === zone.id)}
                                         clickFunc={handleGo}
                                         type={role}
                                         zone={zone}
                                         key={zone.id}
+                                        closed={!zone?.open}
                                     />
                                 )}
                             </ul>

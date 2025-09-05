@@ -1,4 +1,4 @@
-import { Roles } from "@/constants/enums"
+import { ApiStatus, RateMode, Roles } from "@/constants/enums"
 
 export interface Gate {
     id: number
@@ -24,12 +24,12 @@ export interface Zone {
 }
 
 export interface ApiError {
-    response: { 
-        data: { 
+    response: {
+        data: {
             message: string
-            status: string 
+            status: string
             code?: string
-        } 
+        }
     }
     status: number
     message: string
@@ -70,7 +70,7 @@ export interface Car {
 export interface ApiResponse<T> {
     data: T;
     message?: string;
-    status: 'success' | 'error';
+    status: ApiStatus.SUCCESS | ApiStatus.ERROR;
 }
 
 export interface PaginatedResponse<T> extends ApiResponse<T[]> {
@@ -91,4 +91,29 @@ export interface CheckinRequest {
 
 export interface SubscriptionVerificationRequest {
     id: string;
+}
+
+export interface BreakdownSegment {
+    from: string;
+    to: string;
+    hours: number;
+    rateMode: RateMode.NORMAL | RateMode.SPECIAL;
+    rate: number;
+    amount: number;
+}
+
+export interface CheckoutResponse {
+    ticketId: string;
+    checkinAt: string;
+    checkoutAt: string;
+    durationHours: number;
+    breakdown: BreakdownSegment[];
+    amount: number;
+    zoneState: Zone;
+}
+
+export interface CheckoutRequest {
+    ticketId: string;
+    subscriptionId?: string;
+    forceConvertToVisitor?: boolean;
 }

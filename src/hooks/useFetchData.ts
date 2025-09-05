@@ -8,7 +8,8 @@ interface UseFetchDataReturn<T> {
     data: T | undefined;
     refetch: () => void;
     isError: boolean,
-    isFetching: boolean
+    isFetching: boolean,
+    isSuccess: boolean
 }
 
 const useFetchData = <T,>(
@@ -17,7 +18,7 @@ const useFetchData = <T,>(
     options?: Omit<UseQueryOptions<AxiosResponse<T>, AxiosError>, 'queryKey' | 'queryFn'>
 ): UseFetchDataReturn<T> => {
 
-    const { data, error, isLoading, isFetching, refetch, isError } = useQuery<AxiosResponse<T>, AxiosError, AxiosResponse<T>>({
+    const { data, error, isLoading, isFetching, refetch, isError, isSuccess } = useQuery<AxiosResponse<T>, AxiosError, AxiosResponse<T>>({
         queryKey: [key],
         queryFn: func,
         refetchOnWindowFocus: false,
@@ -33,7 +34,8 @@ const useFetchData = <T,>(
         data: data?.data,
         refetch,
         isError,
-        isFetching
+        isFetching,
+        isSuccess
     };
 };
 

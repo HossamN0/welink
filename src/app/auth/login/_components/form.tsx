@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button"
 import Loader from "@/components/ui/loader"
 import { Forms, Routes } from "@/constants/enums"
 import useFormFields from "@/hooks/useFormFields"
+import { setToken } from "@/store/reducers/persist-slice"
 import { ValidationErrors } from "@/validation/auth"
-import { signIn } from "next-auth/react"
+import { getSession, signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useRef, useState } from "react"
 import toast from "react-hot-toast"
+import { useDispatch } from "react-redux"
 
 function Form() {
 
@@ -18,6 +20,7 @@ function Form() {
     const { getFormFields } = useFormFields({ form: Forms.LOGIN });
     const router = useRouter()
     const formRef = useRef<HTMLFormElement>(null);
+    const dispatch = useDispatch()
     const onsubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formRef.current) return
@@ -37,6 +40,9 @@ function Form() {
                 }
             }
             if (res?.ok) {
+                const session = await getSession();
+                const token = session?.user?.token;
+                dispatch(setToken(token))
                 router.replace(`/${Routes.HOME}`)
             }
         } catch (error) {

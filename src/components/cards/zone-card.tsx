@@ -1,40 +1,29 @@
-import { ApiError, Subscription, Zone } from "@/types/api"
+import { Subscription, Zone } from "@/types/api"
 import { Button } from "../ui/button"
 import { DoorClosedLocked } from "lucide-react"
-import { Input } from "../ui/input"
 import { correct } from "../icons"
 import { Roles } from "@/constants/enums"
 import Loader from "../ui/loader"
-import { useEffect, useState } from "react"
-import useFetchData from "@/hooks/useFetchData"
-import { getSubscriptions } from "@/services/api/subscription"
-import toast from "react-hot-toast"
-import { useQueryClient } from "@tanstack/react-query"
+import SubscriptionForm from "../form-fields/subscription-form"
 
-function ZoneCard({ verifyId, setVerifyId, loading, clickFunc, type, zone }: { verifyId: string, setVerifyId: React.Dispatch<React.SetStateAction<string>>, loading: boolean, clickFunc: ({ zoneId }: { zoneId: string }) => void, type: string, zone: Zone }) {
+function ZoneCard({
+    verifyData,
+    setVerifyData,
+    loading,
+    clickFunc,
+    type,
+    zone,
+    closed
+}: {
+    verifyData: Subscription | undefined,
+    setVerifyData: React.Dispatch<React.SetStateAction<Subscription | undefined>>,
+    loading: boolean,
+    clickFunc: ({ zoneId }: { zoneId: string }) => void,
+    type: string,
+    zone: Zone,
+    closed: boolean
+}) {
 
-    const queryClient = useQueryClient();
-    const [id, setId] = useState('');
-    const [category, setCategory] = useState('');
-    const { data, isLoading, isFetching, error, isError, refetch } = useFetchData<Subscription>(`verify-${zone.id}`, () => getSubscriptions({ id }), { enabled: false, retry: false });
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        refetch();
-    }
-    useEffect(() => {
-        if (isError) {
-            toast.error((error as ApiError)?.response?.data?.message)
-        }
-        if (data) {
-            const subscriptionId = data?.id;
-            if (subscriptionId) {
-                toast.success(`All Zones With ${data?.category} Subscription Are Open For You`, { duration: 5000 });
-                setVerifyId(subscriptionId);
-                setCategory(data?.category);
-            }
-        }
-        queryClient.resetQueries({ queryKey: [`verify-${zone.id}`] });
-    }, [isError, data, error, id, queryClient, setVerifyId]);
     return (
         <>
             <li className="relative flex flex-col justify-between gap-4 p-4 md:w-110 w-70 rounded-xl bg-[hsla(240,15%,9%,1)] shadow-[inset_0px_-16px_24px_0px_rgba(255,255,255,0.25)]
@@ -64,17 +53,15 @@ function ZoneCard({ verifyId, setVerifyId, loading, clickFunc, type, zone }: { v
                 </div>
                 <div>
                     {type === Roles.SUBSCRIBER &&
-                        <form onSubmit={handleSubmit} action="" className="mb-4">
-                            <div className="bg-gray-800 rounded-md p-2 flex items-center justify-between">
-                                <Input onChange={(e) => setId(e.target.value)} value={id} name="subscriptionId" placeholder="subscription Id" className="border-none p-0" />
-                                <Button disabled={!id || isLoading || isFetching} type="submit" variant={'cyan'} className="rounded-md">
-                                    {(isLoading || isFetching) ? <Loader /> : 'Verify'}
-                                </Button>
-                            </div>
-                        </form>
+                        <SubscriptionForm showToast={true} setVerifyData={setVerifyData} zone={zone} />
                     }
-                    <Button disabled={loading || (type === Roles.SUBSCRIBER && (!verifyId || category !== zone.categoryId))} onClick={() => clickFunc({ zoneId: zone.id })} variant={'cyan'} className="w-full">
-                        {loading ? <Loader /> : 'Go'}
+                    <Button
+                        disabled={loading || (type === Roles.SUBSCRIBER && (!verifyData?.id || verifyData?.category !== zone.categoryId)) || closed}
+                        onClick={() => clickFunc({ zoneId: zone.id })}
+                        variant={'cyan'}
+                        className="w-full"
+                    >
+                        {loading ? <Loader /> : closed ? 'Closed Zone' : 'Go'}
                     </Button>
                 </div>
             </li>

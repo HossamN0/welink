@@ -7,13 +7,15 @@ interface WebSocketConnection {
 
 export interface PersistSlice {
     websocket: WebSocketConnection;
+    token: string
 }
 
 const initialState: PersistSlice = {
     websocket: {
         connected: false,
         ws: null
-    }
+    },
+    token: ''
 }
 
 export const PersistSlice = createSlice({
@@ -22,10 +24,13 @@ export const PersistSlice = createSlice({
     reducers: {
         setWebsocket: (state, action) => {
             state.websocket = { ...state.websocket, ...action.payload }
+        },
+        setToken: (state, action) => {
+            state.token = action.payload
         }
     },
 })
 
-export const { setWebsocket } = PersistSlice.actions
+export const { setWebsocket, setToken } = PersistSlice.actions
 
 export default PersistSlice.reducer

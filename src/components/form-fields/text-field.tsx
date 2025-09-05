@@ -12,7 +12,9 @@ function TextField(
         autoFocus,
         error,
         defaultValue,
-        readOnly
+        readOnly,
+        onChange,
+        value
     }: {
         label: string
         name: string
@@ -23,6 +25,8 @@ function TextField(
         error?: ValidationErrors
         defaultValue?: string
         readOnly?: boolean
+        onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+        value?: string
     }) {
     return (
         <div className="space-y-3.5">
@@ -35,6 +39,8 @@ function TextField(
                 autoFocus={autoFocus}
                 defaultValue={defaultValue}
                 readOnly={readOnly}
+                onChange={onChange}
+                value={value}
             />
             {error && error[name] &&
                 <p className="text-sm text-destructive">{error[name]}</p>
