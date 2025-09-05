@@ -1,0 +1,73 @@
+@keyframes cardAnim {
+    0% {
+        transform: translateZ(0px);
+    }
+
+    25% {
+        transform: translateX(-10px) rotateY(-20deg);
+    }
+
+    75% {
+        transform: translateX(10px) rotateY(20deg);
+    }
+
+    100% {
+        transform: translateZ(0px);
+    }
+}
+
+@keyframes lightAnim {
+    25% {
+        transform: translateX(450px) scale(1.5) rotate(25deg);
+    }
+
+    50% {
+        transform: translateX(-100px) scale(1.5) rotate(25deg);
+    }
+}
+
+@keyframes shadowAnim {
+    35% {
+        transform: translateX(200px) scale(1.5);
+    }
+
+    75% {
+        transform: translateX(0px) scale(1.5);
+    }
+}
+
+@keyframes colorAnim {
+    0% {
+        background-color: #ffbd44;
+    }
+
+    10% {
+        background-color: #fb6902;
+    }
+
+    15%,
+    25% {
+        background-color: #ff4141;
+    }
+
+    35% {
+        background-color: #fb6902;
+    }
+
+    40% {
+        background-color: #ffbd44;
+    }
+
+    50% {
+        background-color: #fb6902;
+    }
+
+    55%,
+    75% {
+        background-color: #ff4141;
+    }
+
+    100% {
+        background-color: #ffbd44;
+    }
+}

@@ -12,7 +12,17 @@ export const WebsocketConnection = () => {
         const ws = new WebSocket(wsUrl)
 
         ws.onopen = () => {
-            dispatch(setWebsocket({ connected: true }))
+            dispatch(setWebsocket({ connected: true, ws }));
+            console.log('connected')
+        }
+
+        // ws.onopen = () => {
+        //     console.log("WS connected, subscribing to gate:", 'gate_1');
+        //     ws.send(JSON.stringify({ type: "subscribe", payload: { gateId: "gate_1" } }));
+        // };
+
+        ws.onmessage = (message) => {
+            console.log('message', message)
         }
 
         ws.onerror = (error) => {

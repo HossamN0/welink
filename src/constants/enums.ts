@@ -27,4 +27,6 @@ export enum Environment {
 export enum Roles {
     ADMIN = "admin",
     EMPLOYEE = "employee",
+    VISITOR = "visitor",
+    SUBSCRIBER = "subscriber"
 }

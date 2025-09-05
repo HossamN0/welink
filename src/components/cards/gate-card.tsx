@@ -1,11 +1,9 @@
 import { Gate } from "@/types/api"
-import { Button } from "../ui/button"
-import { useRouter } from "next/navigation"
+import { buttonVariants } from "../ui/button"
 import { CircleParking } from "lucide-react"
+import Link from "next/link"
 
 function GateCard({ gate }: { gate: Gate }) {
-
-    const router = useRouter()
 
     return (
         <li className="relative flex flex-col justify-between gap-4 p-4 md:w-80 w-70 rounded-xl bg-[hsla(240,15%,9%,1)] shadow-[inset_0px_-16px_24px_0px_rgba(255,255,255,0.25)]
@@ -21,9 +19,11 @@ function GateCard({ gate }: { gate: Gate }) {
 
                 <hr className="w-full h-[0.1rem] border-0 bg-gray-800" />
                 <h3>Zones :</h3>
-                {gate?.zoneIds?.map((zoneId: string) => <Item key={zoneId} item={zoneId} />)}
+                <ul className="flex flex-col gap-4">
+                    {gate?.zoneIds?.map((zoneId: string) => <Item key={zoneId} item={zoneId} />)}
+                </ul>
             </div>
-            <Button onClick={() => router.push(`/gate/${gate.id}`)} variant={'cyan'} className="w-full">Go</Button>
+            <Link className={`${buttonVariants({ variant: 'cyan', className: 'w-full !rounded-2xl' })}`} href={`/gate/${gate.id}`}>Go</Link>
         </li>
 
     )
@@ -33,13 +33,13 @@ export default GateCard
 
 function Item({ item }: { item: string }) {
     return (
-        <div className="flex flex-col gap-2">
+        <li className="flex flex-col gap-2">
             <p className="flex items-center gap-2">
                 <span className="flex items-center justify-center w-4 h-4 bg-cyan-400 rounded-full">
                     <CircleParking className="text-black font-medium" />
                 </span>
                 <span className="text-white text-sm">{item}</span>
             </p>
-        </div>
+        </li>
     )
 }

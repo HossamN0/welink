@@ -1,11 +1,12 @@
+import { Roles } from "@/constants/enums"
 
-function GateToggle({ role, setRole }: { role: string, setRole: React.Dispatch<React.SetStateAction<'subscriber' | 'visitor'>> }) {
+function GateToggle({ role, setRole }: { role: string, setRole: React.Dispatch<React.SetStateAction<Roles.SUBSCRIBER | Roles.VISITOR>> }) {
 
     const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
-            setRole('subscriber')
+            setRole(Roles.SUBSCRIBER)
         } else {
-            setRole('visitor')
+            setRole(Roles.VISITOR)
         }
     }
 
@@ -25,10 +26,10 @@ function GateToggle({ role, setRole }: { role: string, setRole: React.Dispatch<R
                 className="pointer-events-none absolute inset-0 rounded-full bg-cyan-200 after:absolute after:inset-[4px] after:rounded-full after:bg-cyan-950 after:transition-all after:duration-500 after:ease-[cubic-bezier(0.47,1.64,0.41,0.8)] peer-checked:after:left-1/2 after:left-[5px] after:right-1/2 peer-checked:after:right-[5px]"
             />
 
-            <span className={`relative z-10 grid place-content-center px-8 py-4 opacity-75 transition-opacity duration-300 ease-in-out delay-150 peer-checked:opacity-100 ${role === 'visitor' ? 'text-white' : ''}`}>
+            <span className={`relative z-10 grid place-content-center px-8 py-4 opacity-75 transition-opacity duration-300 ease-in-out delay-150 peer-checked:opacity-100 ${role === Roles.VISITOR ? 'text-white' : ''}`}>
                 Visitor
             </span>
-            <span className={`relative z-10 grid place-content-center px-8 py-4 opacity-100 transition-opacity duration-300 ease-in-out delay-150 peer-checked:opacity-75 ${role === 'subscriber' ? 'text-white' : ''}`}>
+            <span className={`relative z-10 grid place-content-center px-8 py-4 opacity-100 transition-opacity duration-300 ease-in-out delay-150 peer-checked:opacity-75 ${role === Roles.SUBSCRIBER ? 'text-white' : ''}`}>
                 Subscriber
             </span>
         </label>

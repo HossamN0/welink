@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface Websocket {
-    connected: boolean
-}
-export interface CounterState {
-    websocket: {
-        connected: boolean
-    }
+interface WebSocketConnection {
+    connected: boolean;
+    ws: WebSocket | null;
 }
 
-const initialState: CounterState = {
+export interface PersistSlice {
+    websocket: WebSocketConnection;
+}
+
+const initialState: PersistSlice = {
     websocket: {
-        connected: false
+        connected: false,
+        ws: null
     }
 }
 
@@ -19,9 +20,8 @@ export const PersistSlice = createSlice({
     name: 'persist',
     initialState,
     reducers: {
-
         setWebsocket: (state, action) => {
-            state.websocket = {...state.websocket, ...action.payload}
+            state.websocket = { ...state.websocket, ...action.payload }
         }
     },
 })

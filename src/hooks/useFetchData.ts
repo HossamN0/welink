@@ -6,6 +6,9 @@ interface UseFetchDataReturn<T> {
     error: AxiosError | null;
     isLoading: boolean;
     data: T | undefined;
+    refetch: () => void;
+    isError: boolean,
+    isFetching: boolean
 }
 
 const useFetchData = <T,>(
@@ -14,7 +17,7 @@ const useFetchData = <T,>(
     options?: Omit<UseQueryOptions<T, AxiosError>, 'queryKey' | 'queryFn'>
 ): UseFetchDataReturn<T> => {
 
-    const { data, error, isLoading } = useQuery<T, AxiosError, T>({
+    const { data, error, isLoading, isFetching, refetch, isError } = useQuery<T, AxiosError, T>({
         queryKey: [key],
         queryFn: func,
         refetchOnWindowFocus: false,
@@ -29,6 +32,9 @@ const useFetchData = <T,>(
         error: error || null,
         isLoading,
         data,
+        refetch,
+        isError,
+        isFetching
     };
 };
 
