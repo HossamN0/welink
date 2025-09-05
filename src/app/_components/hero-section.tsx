@@ -5,17 +5,20 @@ import Link from "@/components/link"
 import { Button, buttonVariants } from "@/components/ui/button"
 import Loader from "@/components/ui/loader"
 import { Pages, Roles, Routes } from "@/constants/enums"
+import { setToken } from "@/store/reducers/persist-slice"
 import { User } from "next-auth"
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 
 function HeroSection({ session }: { session: { user: User } }) {
 
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState<boolean>(false);
     const user = session?.user
     const router = useRouter();
-    const routeDependonRole = user?.role === Roles.ADMIN ? Routes.ADMIN : user?.role === Roles.EMPLOYEE ? Routes.CHECKPOINT : Routes.GATE
+    const routeDependonRole = user?.role === Roles.ADMIN ? `${Routes.ADMIN}/${Pages.PARKING}` : user?.role === Roles.EMPLOYEE ? Routes.CHECKPOINT : Routes.GATE
     const textDependonRole = user?.role === Roles.ADMIN ? 'Dashboard' : user?.role === Roles.EMPLOYEE ? 'Checkpoint' : 'Gate'
     const handleAuthClick = async () => {
         if (user) {
@@ -24,6 +27,7 @@ function HeroSection({ session }: { session: { user: User } }) {
                 callbackUrl: `/${Routes.HOME}`,
                 redirect: false
             })
+            dispatch(setToken(''))
             setLoading(false)
             router.refresh()
         } else {

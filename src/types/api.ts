@@ -1,4 +1,4 @@
-import { ApiStatus, RateMode, Roles } from "@/constants/enums"
+import { ApiStatus, RateMode, Roles, ZoneStatus } from "@/constants/enums"
 
 export interface Gate {
     id: number
@@ -21,6 +21,7 @@ export interface Zone {
     rateSpecial: number
     reserved: number
     totalSlots: number
+    zoneId?: string
 }
 
 export interface ApiError {
@@ -116,4 +117,15 @@ export interface CheckoutRequest {
     ticketId: string;
     subscriptionId?: string;
     forceConvertToVisitor?: boolean;
+}
+
+
+export interface ZoneChangeResponse {
+    zoneId: string,
+    open: boolean
+}
+
+export interface ZoneChangeRequest {
+    id: string,
+    status: ZoneStatus.CLOSED | ZoneStatus.OPEN
 }

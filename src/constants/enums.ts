@@ -8,6 +8,8 @@ export enum Routes {
 
 export enum Pages {
     LOGIN = "login",
+    PARKING = "parking",
+    CONTROL = "control"
 }
 
 export enum Forms {
@@ -40,4 +42,9 @@ export enum ApiStatus {
     LOADING = "loading",
     SUCCESS = "success",
     ERROR = "error"
+}
+
+export enum ZoneStatus {
+    OPEN = "open",
+    CLOSED = "close"
 }

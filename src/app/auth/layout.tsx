@@ -1,3 +1,4 @@
+import Footer from "@/components/footer"
 import Gradiant from "@/components/ui/bg-gradiant"
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -5,6 +6,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
         <main className="w-full relative z-[1] py-[100px]">
             <Gradiant />
             {children}
+            <Footer />
         </main>
     )
 }

@@ -4,7 +4,7 @@ import { Routes } from '@/constants/enums'
 
 function Footer() {
     return (
-        <footer className="bg-black">
+        <footer className="bg-black text-white">
             <div className="pt-14 pb-10 content-container">
                 <div className="h-0.5 bg-white/10 mb-4"></div>
                 <div className="flex items-center justify-between *:opacity-50">

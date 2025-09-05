@@ -10,6 +10,5 @@ export default async function Home() {
     <main>
       <HeroSection session={session!} />
     </main>
-
   );
 }
