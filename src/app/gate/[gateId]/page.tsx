@@ -12,10 +12,10 @@ import ZoneCard from "@/components/cards/zone-card"
 import { Roles } from "@/constants/enums"
 import TicketModal from "./_components/ticket-modal"
 import { useCheckin } from "@/hooks/mutations/useCheckin"
-import { useSelector } from "react-redux"
-import { PersistSlice } from "@/store/reducers/persist-slice"
 import Loader from "@/components/ui/loader"
 import { useQueryClient } from "@tanstack/react-query"
+import { sendWebSocketMessage } from "@/services/ws/manager"
+import { useWebSocket } from "@/hooks/useWebSocket"
 
 function PageGateId() {
 
@@ -26,7 +26,8 @@ function PageGateId() {
     const { gateId }: { gateId: string } = useParams()
     const { data, isLoading } = useFetchData(`gate-${gateId}`, () => GetGateById(gateId))
     const checkinMutation = useCheckin()
-    const { connected, ws } = useSelector((state: { PersistSlice: PersistSlice }) => state?.PersistSlice?.websocket || {});
+    const message = useWebSocket();
+
     const handleGo = ({ zoneId }: { zoneId: string }) => {
         setZoneId(zoneId)
         const data = {
@@ -48,8 +49,13 @@ function PageGateId() {
     useEffect(() => {
         if (checkinMutation.isSuccess) {
             queryClient.resetQueries({ queryKey: [`gate-${gateId}`] });
+            sendWebSocketMessage({ type: 'subscribe', payload: { gateId: gateId } })
         }
-    }, [checkinMutation.isSuccess, gateId, queryClient])
+    }, [checkinMutation.isSuccess, gateId, queryClient]);
+
+    useEffect(() => {
+        console.log(message)
+    }, [message])
     return (
         <main>
             <TicketModal open={checkinMutation.isSuccess} setOpen={checkinMutation.reset} data={checkinMutation.data} />

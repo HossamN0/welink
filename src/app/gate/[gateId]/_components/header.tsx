@@ -1,11 +1,10 @@
-import { PersistSlice } from "@/store/reducers/persist-slice";
+import { getWebSocketInstance } from "@/services/ws/manager";
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux";
 
 function GateHeader({ gateId }: { gateId: string }) {
 
     const [time, setTime] = useState(new Date());
-    const connected = useSelector((state: { PersistSlice: PersistSlice }) => state?.PersistSlice?.websocket?.connected);
+    const webSocket = getWebSocketInstance()
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -21,7 +20,7 @@ function GateHeader({ gateId }: { gateId: string }) {
 
             <div className="content-container flex sm:flex-row flex-col items-center justify-between">
                 <p>Gate ID : {gateId}</p>
-                <p>Websocket : {connected ? 'connected' : 'disconnected'}</p>
+                <p>Websocket : {webSocket ? 'connected' : 'disconnected'}</p>
                 <p>current time : {time.toLocaleString()}</p>
             </div>
         </header>
