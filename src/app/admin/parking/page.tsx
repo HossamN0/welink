@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import Loader from "@/components/ui/loader"
-import { ZoneStatus } from "@/constants/enums"
 import { useChangeZone } from "@/hooks/mutations/useChangeZone"
 import useFetchData from "@/hooks/useFetchData"
 import { getParkingState } from "@/services/api/admin"
@@ -30,7 +29,8 @@ function ParkingPage() {
                     :
                     <div className="not-found">
                         No Zones Found
-                    </div>)
+                    </div>
+                    )
             }
         </section>
     )
@@ -46,7 +46,7 @@ const AdminZoneCard = ({ zone, refetch }: { zone: Zone, refetch: string }) => {
     const handleZoneChange = ({ status, id }: { status: boolean, id: string }) => {
         const data: ZoneChangeRequest = {
             id,
-            status: status ? ZoneStatus.CLOSED : ZoneStatus.OPEN
+            status: !status
         }
         statusMutation.mutate(data)
     }

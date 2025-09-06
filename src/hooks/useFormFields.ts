@@ -19,10 +19,27 @@ const useFormFields = ({ form }: { form: string }) => {
         }
     ]
 
+    const categoryForm = (): IFormField[] => [
+        {
+            label: 'Rate Normal',
+            name: 'rateNormal',
+            type: 'number',
+            placeholder: "Rate Normal",
+        },
+        {
+            label: 'Rate Special',
+            name: 'rateSpecial',
+            type: 'number',
+            placeholder: "Rate Special",
+        }
+    ]
+
     const getFormFields = (): IFormField[] => {
         switch (form) {
             case Forms.LOGIN:
                 return loginForm();
+            case Forms.CATEGORY:
+                return categoryForm();
             default:
                 return [];
         }

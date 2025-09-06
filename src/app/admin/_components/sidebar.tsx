@@ -3,7 +3,7 @@
 import Link from "@/components/link"
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import { Pages, Routes } from "@/constants/enums"
-import { Home, SquareParking, UserStar } from "lucide-react"
+import { Home, SquareParking, SquareStack } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 const items = [
@@ -18,9 +18,9 @@ const items = [
         icon: SquareParking,
     },
     {
-        title: "Control Panel",
-        url: `/${Routes.ADMIN}/${Pages.CONTROL}`,
-        icon: UserStar,
+        title: "Categories",
+        url: `/${Routes.ADMIN}/${Pages.CATEGORY}`,
+        icon: SquareStack,
     }
 ]
 

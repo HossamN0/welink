@@ -9,15 +9,18 @@ export enum Routes {
 export enum Pages {
     LOGIN = "login",
     PARKING = "parking",
-    CONTROL = "control"
+    CATEGORY = "category",
+    VACATION = "vacation"
 }
 
 export enum Forms {
     LOGIN = "login",
+    CATEGORY = "category"
 }
 
 export enum InputTypes {
     TEXT = "text",
+    NUMBER = "number",
     PASSWORD = "password",
 }
 

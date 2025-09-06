@@ -1,3 +1,4 @@
+import { InputTypes } from "@/constants/enums"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { ValidationErrors } from "@/validation/auth"
@@ -41,6 +42,7 @@ function TextField(
                 readOnly={readOnly}
                 onChange={onChange}
                 value={value}
+                min={type === InputTypes.NUMBER ? 1 : undefined}
             />
             {error && error[name] &&
                 <p className="text-sm text-destructive">{error[name]}</p>

@@ -12,9 +12,11 @@ interface Props extends IFormField {
 
 function FormFields(props: Props) {
     const { type } = props;
+
     const renderField = (): React.ReactNode => {
         switch (type) {
             case InputTypes.TEXT:
+            case InputTypes.NUMBER:
                 return <TextField {...props} />
             case InputTypes.PASSWORD:
                 return <PasswordField {...props} />

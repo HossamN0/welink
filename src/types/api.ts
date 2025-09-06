@@ -1,4 +1,4 @@
-import { ApiStatus, RateMode, Roles, ZoneStatus } from "@/constants/enums"
+import { ApiStatus, RateMode, Roles } from "@/constants/enums"
 
 export interface Gate {
     id: number
@@ -127,5 +127,17 @@ export interface ZoneChangeResponse {
 
 export interface ZoneChangeRequest {
     id: string,
-    status: ZoneStatus.CLOSED | ZoneStatus.OPEN
+    status: boolean
+}
+
+export interface Category {
+    id: string;
+    name: string;
+    rateNormal?: number;
+    rateSpecial?: number;
+}
+
+export interface CategoryUpdateRequest {
+    rateNormal: number;
+    rateSpecial: number;
 }
