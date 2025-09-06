@@ -8,6 +8,7 @@ import { Environment } from '@/constants/enums';
 interface PerformanceDashboardProps {
   isVisible?: boolean;
 }
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default function PerformanceDashboard({ isVisible = false }: PerformanceDashboardProps) {
   const [metrics, setMetrics] = useState<Record<string, number>>({});

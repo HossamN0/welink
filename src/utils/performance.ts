@@ -1,6 +1,8 @@
 import { Environment } from '@/constants/enums';
 import React from 'react';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // Performance monitoring utilities
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;

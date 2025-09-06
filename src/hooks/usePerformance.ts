@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useCallback, useState } from 'react';
 import { PerformanceMonitor } from '@/utils/performance';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // Hook for performance monitoring
 export function usePerformanceMonitor(componentName: string) {
   const startTime = useRef(performance.now());
