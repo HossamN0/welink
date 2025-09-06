@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import ReactQueryProvider from "@/providers/react-query";
 import ReduxProvider from "@/providers/redux";
 import { WebsocketConnection } from "@/services/ws/connection";
+import { measureWebVitals } from "@/utils/performance";
 import "@/styles/globals.css";
 
 const roboto = Roboto({
@@ -25,6 +26,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Initialize performance monitoring
+              if (typeof window !== 'undefined') {
+                ${measureWebVitals.toString()}();
+              }
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${roboto.className} min-container`}
       >

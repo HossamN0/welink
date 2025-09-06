@@ -14,7 +14,7 @@ function TicketModal({ open, setOpen, data }: TicketModalProps) {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle className="text-left text-[16px] md:text-[20px]">Ticket created successfully</DialogTitle>
+                    <DialogTitle className="text-left text-[16px] md:text-[20px] text-white">Ticket created successfully</DialogTitle>
                 </DialogHeader>
                 {data && (
                     <>

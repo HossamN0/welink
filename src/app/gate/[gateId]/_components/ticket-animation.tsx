@@ -1,7 +1,39 @@
 import '@/styles/ticket-animation.css'
 import { CheckinResponse } from '@/types/api'
+import { memo, useMemo } from 'react'
+
+const TicketIcon = memo(() => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        className="shrink-0"
+    >
+        <path
+            fill="none"
+            stroke="#aeaeae"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
+            d="m18 8l4 4l-4 4M2 12h20"
+        />
+    </svg>
+))
+
+TicketIcon.displayName = 'TicketIcon'
+
+const formatTicketData = (data: CheckinResponse) => ({
+    type: data?.ticket?.type,
+    categoryId: data?.zoneState?.categoryId,
+    id: data?.ticket?.id,
+    checkinAt: data?.ticket?.checkinAt ? new Date(data.ticket.checkinAt).toLocaleString() : '',
+    gateId: data?.ticket?.gateId,
+    zoneId: data?.ticket?.zoneId,
+})
 
 function TicketAnimation({ data }: { data: CheckinResponse }) {
+    const formattedData = useMemo(() => formatTicketData(data), [data])
     return (
         <div className="perspective-[1000px] mt-11">
             <div className="relative h-[150px] md:w-[320px] w-[250px] flex gap-4 rounded-xl bg-white text-[#2d2d2d] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.25)] animate-[cardAnim_10s_infinite] hover:[animation-play-state:paused]">
@@ -29,27 +61,12 @@ function TicketAnimation({ data }: { data: CheckinResponse }) {
                         <div className="flex items-center justify-between">
                             <div className="flex flex-col">
                                 <p className="text-[10px] leading-none text-[#aeaeae]">Type</p>
-                                <p className="font-bold text-[#2d2d2d]">{data?.ticket?.type}</p>
+                                <p className="font-bold text-[#2d2d2d]">{formattedData.type}</p>
                             </div>
-                            <svg
-                                className="shrink-0"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    fill="none"
-                                    stroke="#aeaeae"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="1"
-                                    d="m18 8l4 4l-4 4M2 12h20"
-                                />
-                            </svg>
+                            <TicketIcon />
                             <div className="flex flex-col">
                                 <p className="text-[10px] leading-none text-[#aeaeae]">Ticket Category</p>
-                                <p className="font-bold text-[#2d2d2d]">{data?.zoneState?.categoryId}</p>
+                                <p className="font-bold text-[#2d2d2d]">{formattedData.categoryId}</p>
                             </div>
                         </div>
 
@@ -59,26 +76,26 @@ function TicketAnimation({ data }: { data: CheckinResponse }) {
                             <div className="flex justify-between gap-1">
                                 <div className="text-[10px] leading-3">
                                     <p className="text-[#aeaeae]">ID</p>
-                                    <p className="font-medium text-[#212121]">{data?.ticket?.id}</p>
+                                    <p className="font-medium text-[#212121]">{formattedData.id}</p>
                                 </div>
                                 <div className="text-[10px] leading-3">
                                     <p className="text-[#aeaeae]">Checkin At</p>
-                                    <p className="font-medium text-[#212121]">{new Date(data?.ticket?.checkinAt).toLocaleString()}</p>
+                                    <p className="font-medium text-[#212121]">{formattedData.checkinAt}</p>
                                 </div>
                             </div>
 
                             <div className="flex justify-between gap-1">
                                 <div className="text-[10px] leading-3">
                                     <p className="text-[#aeaeae]">Gate</p>
-                                    <p className="font-medium text-[#212121]">{data?.ticket?.gateId}</p>
+                                    <p className="font-medium text-[#212121]">{formattedData.gateId}</p>
                                 </div>
                                 <div className="text-[10px] leading-3">
                                     <p className="text-[#aeaeae]">Zone</p>
-                                    <p className="font-medium text-[#212121]">{data?.ticket?.zoneId}</p>
+                                    <p className="font-medium text-[#212121]">{formattedData.zoneId}</p>
                                 </div>
                                 <div className="text-[10px] leading-3">
                                     <p className="text-[#aeaeae]">Ticket</p>
-                                    <p className="font-medium text-[#212121]">{data?.ticket?.id}</p>
+                                    <p className="font-medium text-[#212121]">{formattedData.id}</p>
                                 </div>
                             </div>
                         </div>
@@ -97,4 +114,4 @@ function TicketAnimation({ data }: { data: CheckinResponse }) {
     )
 }
 
-export default TicketAnimation
+export default memo(TicketAnimation)

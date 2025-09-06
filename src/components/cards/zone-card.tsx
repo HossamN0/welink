@@ -5,8 +5,9 @@ import { correct } from "../icons"
 import { Roles } from "@/constants/enums"
 import Loader from "../ui/loader"
 import SubscriptionForm from "../form-fields/subscription-form"
+import { memo } from "react"
 
-function ZoneCard({
+const ZoneCard = memo(function ZoneCard({
     verifyData,
     setVerifyData,
     loading,
@@ -67,7 +68,7 @@ function ZoneCard({
             </li>
         </>
     )
-}
+});
 
 export default ZoneCard
 

@@ -7,7 +7,7 @@ interface UseFetchDataReturn<T> {
     isLoading: boolean;
     data: T | undefined;
     refetch: () => void;
-    isError: boolean,
+    isError: boolean;
     isFetching: boolean,
     isSuccess: boolean
 }

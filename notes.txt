@@ -1,5 +1,0 @@
-- `GET  /api/v1/admin/vacations`
-- `GET  /api/v1/admin/users`
-
-both not working (backend).
-so flow of both not found in frontend
